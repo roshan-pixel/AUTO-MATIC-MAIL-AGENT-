@@ -178,9 +178,9 @@ sequenceDiagram
 The codebase architecture is mapped and tracked via a persistent **Graphify Knowledge Graph** at `graphify-out/`.
 
 ### Graph Metrics
-* **Total Nodes**: `313`
-* **Total Edges**: `457`
-* **Community Clusters**: `39`
+* **Total Nodes**: `408`
+* **Total Edges**: `576`
+* **Community Clusters**: `42`
 * **Extraction Confidence**: `89% EXTRACTED` · `11% INFERRED` · `0% AMBIGUOUS`
 
 ### Top "God Nodes" (Core Architectural Hubs)
@@ -226,7 +226,8 @@ Every file in the repository serves a distinct architectural purpose:
 | [`auto_mail/templates/__init__.py`](auto_mail/templates/__init__.py) | Templates Root | Exports statutory legal and developer claim templates |
 | [`auto_mail/templates/legal_grievance.py`](auto_mail/templates/legal_grievance.py) | Grievance Template | Formats dual-jurisdiction statutory legal notices (India & Singapore) |
 | [`auto_mail/templates/student_pack_claim.py`](auto_mail/templates/student_pack_claim.py) | Claim Template | Formats GitHub Student Developer Pack cloud verification claims |
-| [`examples/send_outlook_only.py`](examples/send_outlook_only.py) | Focused Runner | Dedicated Outlook-only dispatch script with preview screenshot |
+| [`examples/send_outlook_only.py`](examples/send_outlook_only.py) | Focused Runner | Dedicated Outlook → Gmail dispatch script with preview screenshot |
+| [`examples/send_gmail_only.py`](examples/send_gmail_only.py) | Focused Runner | Dedicated Gmail → Outlook dispatch script with chip + subject verification |
 | [`examples/run_cross_verification.py`](examples/run_cross_verification.py) | Cross-Verification | Automated bi-directional test between Outlook and Gmail |
 | [`examples/test_cdp_pills.py`](examples/test_cdp_pills.py) | Diagnostic CLI | Diagnostic script testing Outlook pills and Gmail chips without sending |
 | [`examples/send_outlook_grievance.py`](examples/send_outlook_grievance.py) | Example | End-to-end statutory grievance dispatch example via Outlook Web |
@@ -283,7 +284,14 @@ python send_outlook.py \
 python send_outlook.py -t "client@example.com" -s "Review" -b "Draft text" --dry-run
 ```
 
-### 3. Running Diagnostic Pill/Chip Validation
+### 3. 📬 Focused Gmail Dispatcher (`send_gmail_only.py`)
+Send from Gmail Web to any recipient in one command:
+```bash
+python examples/send_gmail_only.py
+```
+> Verifies Gmail tab is open, sets recipient chip, subject via native fill, injects body (TrustedHTML-safe), screenshots compose, and dispatches with Ctrl+Enter — confirms "Message sent" toast.
+
+### 4. Running Diagnostic Pill/Chip Validation
 Verify recipient badges without sending any email:
 ```bash
 # Run both Outlook and Gmail pill/chip validation
@@ -296,7 +304,7 @@ python examples/test_cdp_pills.py --provider outlook --to support@heroku.com --c
 python examples/test_cdp_pills.py --provider gmail
 ```
 
-### 3. Programmatic Python API
+### 5. Programmatic Python API
 ```python
 from auto_mail import MailAgent, EmailMessage, ProviderType
 
@@ -319,7 +327,7 @@ print("Readiness verified:", result["readiness"])
 # agent.dispatch(msg, provider_type=ProviderType.OUTLOOK, dry_run=False)
 ```
 
-### 4. Command-Line Interface (CLI)
+### 6. Command-Line Interface (CLI)
 ```bash
 # Dry-run dispatch via CLI
 python -m auto_mail.agent \
