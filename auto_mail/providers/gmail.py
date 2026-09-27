@@ -145,21 +145,39 @@ class GmailProvider(BaseMailProvider):
         return True
 
     def set_subject(self, subject: str) -> bool:
-        """Sets subject line in Gmail compose."""
+        """Sets subject line in Gmail compose using native fill (primary) then JS fallback."""
         self.open_compose()
+        # Wait for compose to fully render
+        time.sleep(0.5)
+
+        # Primary: WebBridge native fill — most reliable for <input> elements
+        if hasattr(self.driver, "fill"):
+            try:
+                result = self.driver.fill(self.selectors.subject_field, subject)
+                if result:
+                    time.sleep(0.2)
+                    return True
+            except Exception:
+                pass
+
+        # Fallback: Native property setter to bypass React controlled-input
         code = f"""(() => {{
             const input = document.querySelector({json.dumps(self.selectors.subject_field)});
             if (!input) return false;
             input.focus();
-            input.value = {json.dumps(subject)};
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+            nativeInputValueSetter.call(input, {json.dumps(subject)});
             input.dispatchEvent(new Event('input', {{ bubbles: true }}));
             input.dispatchEvent(new Event('change', {{ bubbles: true }}));
-            return true;
+            input.dispatchEvent(new KeyboardEvent('keyup', {{ bubbles: true }}));
+            return input.value === {json.dumps(subject)};
         }})()"""
         res = self.driver.evaluate(code)
         if not res:
             raise ElementInteractionError("Failed to set subject line in Gmail compose.")
+        time.sleep(0.2)
         return True
+
 
     def set_body(self, html_content: str) -> bool:
         """Injects rich HTML into Gmail message body with TrustedHTML compatibility."""
