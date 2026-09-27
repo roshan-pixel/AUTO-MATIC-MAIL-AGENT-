@@ -1,0 +1,157 @@
+{
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\agent.py": {
+    "mtime": 1790513344.8963757,
+    "ast_hash": "ac8d964ce2cbb7bffed2a59292aa2bf1",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\config.py": {
+    "mtime": 1790513989.817275,
+    "ast_hash": "3a926f0b53fb868533f95bcccc8cf303",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\exceptions.py": {
+    "mtime": 1790513215.3482852,
+    "ast_hash": "328968024b3750e2926335fd5409c424",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\models.py": {
+    "mtime": 1790513222.2775478,
+    "ast_hash": "b5cd41b6eb1456bd9d9f5d3aadb9f3cf",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\__init__.py": {
+    "mtime": 1790513206.4518492,
+    "ast_hash": "15c7864c13f6e8810a7a2491c669172d",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\drivers\\base.py": {
+    "mtime": 1790513254.174074,
+    "ast_hash": "e580f2b2da0da2bdaad598ce31a61596",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\drivers\\cdp_controller.py": {
+    "mtime": 1790513259.501154,
+    "ast_hash": "1aeafc238c2486ef25d7c8a9566ab894",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\drivers\\playwright_driver.py": {
+    "mtime": 1790513279.5670662,
+    "ast_hash": "99b2d8818e23241773dedbf57eefa862",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\drivers\\smtp_driver.py": {
+    "mtime": 1790513285.4034455,
+    "ast_hash": "e42bb0cca8506711d063ee9560e8faa9",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\drivers\\webbridge.py": {
+    "mtime": 1790514483.0762105,
+    "ast_hash": "4e931ece0aa6b5a89a8c3d55ce658c0a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\drivers\\__init__.py": {
+    "mtime": 1790513248.6405406,
+    "ast_hash": "5a472e3ef261112d67f100e035a5d4d9",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\providers\\base_provider.py": {
+    "mtime": 1790513293.087685,
+    "ast_hash": "7e03badcf5894c49b730a06aef94d5ac",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\providers\\gmail.py": {
+    "mtime": 1790514508.0578222,
+    "ast_hash": "5375a9eda925dae18a40f7e1ca7e4039",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\providers\\outlook.py": {
+    "mtime": 1790514498.556742,
+    "ast_hash": "8ea983c0802d8f0e3466dfbe332a87cc",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\providers\\__init__.py": {
+    "mtime": 1790513288.9482622,
+    "ast_hash": "fdc00f99f2003aec35dbefdfcd3103ee",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\security\\sanitizer.py": {
+    "mtime": 1790513243.92809,
+    "ast_hash": "8610e171c064a78c2123db8b3cad7560",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\security\\__init__.py": {
+    "mtime": 1790513235.3758326,
+    "ast_hash": "d0ccf054ca205d78bf723f16af1e97c8",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\templates\\legal_grievance.py": {
+    "mtime": 1790513332.6156201,
+    "ast_hash": "502ff2233204a9a46e9c9218e8e311b3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\templates\\student_pack_claim.py": {
+    "mtime": 1790513337.399928,
+    "ast_hash": "342cbfcd5f408566bab06afa47681286",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\templates\\__init__.py": {
+    "mtime": 1790513321.3474653,
+    "ast_hash": "d20cf5de8512232b94c4975b9076880c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\examples\\multi_provider_sync.py": {
+    "mtime": 1790513365.152251,
+    "ast_hash": "df49308b1611e1e2db2b050486392c27",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\examples\\send_gmail_notice.py": {
+    "mtime": 1790513359.6499734,
+    "ast_hash": "57cefe2ce4e7ef33279ecfb45341f570",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\examples\\send_outlook_grievance.py": {
+    "mtime": 1790513352.4764714,
+    "ast_hash": "3ae96e4145d37f78c8f7c22c97a8de41",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\examples\\test_cdp_pills.py": {
+    "mtime": 1790514269.0387018,
+    "ast_hash": "22e9e820424ff84bea601bc1cfb4953f",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\tests\\test_cdp_controller.py": {
+    "mtime": 1790514140.869227,
+    "ast_hash": "1b0a62db9742f6cf9fe6a799ab2577fd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\tests\\test_models.py": {
+    "mtime": 1790514127.7541897,
+    "ast_hash": "c86582f744a2dc138971fee51f652814",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\tests\\test_providers.py": {
+    "mtime": 1790514150.0635927,
+    "ast_hash": "0e2284350d688ec1ba1740c3b10d0a47",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\tests\\test_sanitizer.py": {
+    "mtime": 1790514227.9158688,
+    "ast_hash": "dae6cbb8868343a33652cda47eee900a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\tests\\__init__.py": {
+    "mtime": 1790514120.58483,
+    "ast_hash": "dfd874dcdfd6a459bd0d95ad94056365",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\requirements.txt": {
+    "mtime": 1790513193.7662106,
+    "ast_hash": "e21b5e9077592de141087ae681adbbe4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\README.md": {
+    "mtime": 1790514679.8260057,
+    "ast_hash": "6fd46117cb6c2c3fff6c7ce1d95767c4",
+    "semantic_hash": ""
+  }
+}
