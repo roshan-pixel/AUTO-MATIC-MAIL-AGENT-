@@ -1,16 +1,16 @@
 # Graph Report - AUTO-MATIC-MAIL-AGENT-  (2026-09-27)
 
 ## Corpus Check
-- 30 files · ~9,649 words
+- 34 files · ~14,487 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 343 nodes · 486 edges · 36 communities (13 shown, 23 thin omitted)
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 52 edges (avg confidence: 0.7)
+- 408 nodes · 576 edges · 42 communities (18 shown, 24 thin omitted)
+- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 69 edges (avg confidence: 0.7)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d86313ca`
+- Built from commit: `68685529`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -27,8 +27,11 @@
 - [[_COMMUNITY_Community 9|Community 9]]
 - [[_COMMUNITY_Community 10|Community 10]]
 - [[_COMMUNITY_Community 11|Community 11]]
+- [[_COMMUNITY_Community 12|Community 12]]
 - [[_COMMUNITY_Community 13|Community 13]]
+- [[_COMMUNITY_Community 14|Community 14]]
 - [[_COMMUNITY_Community 15|Community 15]]
+- [[_COMMUNITY_Community 16|Community 16]]
 - [[_COMMUNITY_Community 17|Community 17]]
 - [[_COMMUNITY_Community 18|Community 18]]
 - [[_COMMUNITY_Community 19|Community 19]]
@@ -51,68 +54,71 @@
 - [[_COMMUNITY_Community 36|Community 36]]
 - [[_COMMUNITY_Community 37|Community 37]]
 - [[_COMMUNITY_Community 38|Community 38]]
+- [[_COMMUNITY_Community 39|Community 39]]
+- [[_COMMUNITY_Community 40|Community 40]]
+- [[_COMMUNITY_Community 41|Community 41]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `GmailProvider` - 20 edges
-2. `OutlookProvider` - 20 edges
-3. `WebBridgeDriver` - 19 edges
+1. `WebBridgeDriver` - 23 edges
+2. `OutlookProvider` - 23 edges
+3. `GmailProvider` - 21 edges
 4. `PlaywrightDriver` - 17 edges
 5. `MockDriver` - 17 edges
-6. `MailAgent` - 15 edges
-7. `SMTPDriver` - 15 edges
-8. `MailAgentError` - 13 edges
-9. `Recipient` - 13 edges
-10. `EmailMessage` - 13 edges
+6. `Recipient` - 16 edges
+7. `MailAgent` - 15 edges
+8. `EmailMessage` - 15 edges
+9. `SMTPDriver` - 15 edges
+10. `MailAgentError` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `run()` --calls--> `MailAgent`  [INFERRED]
-  examples/send_gmail_notice.py → auto_mail/agent.py
-- `run()` --calls--> `MailAgent`  [INFERRED]
-  examples/send_outlook_grievance.py → auto_mail/agent.py
-- `MockDriver` --uses--> `OutlookSelectors`  [INFERRED]
-  tests/test_providers.py → auto_mail/config.py
-- `MockDriver` --uses--> `GmailSelectors`  [INFERRED]
-  tests/test_providers.py → auto_mail/config.py
-- `MockDriver` --uses--> `RecipientRole`  [INFERRED]
-  tests/test_providers.py → auto_mail/models.py
+- `Colors` --uses--> `WebBridgeDriver`  [INFERRED]
+  send_outlook.py → auto_mail/drivers/webbridge.py
+- `Colors` --uses--> `OutlookProvider`  [INFERRED]
+  send_outlook.py → auto_mail/providers/outlook.py
+- `Colors` --uses--> `RecipientRole`  [INFERRED]
+  send_outlook.py → auto_mail/models.py
+- `send_mail()` --calls--> `assert_payload_is_safe()`  [INFERRED]
+  send_outlook.py → auto_mail/security/sanitizer.py
+- `send_mail()` --calls--> `WebBridgeDriver`  [INFERRED]
+  send_outlook.py → auto_mail/drivers/webbridge.py
 
-## Communities (36 total, 23 thin omitted)
+## Communities (42 total, 24 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.09
-Nodes (12): Autonomous Mail Agent Orchestrator.  High-level interface coordinating drivers,, Custom exceptions for the Mail Agent framework., AUTO-MATIC-MAIL-AGENT: Autonomous Email Dispatch & Management Agent for Outlook, Data models and abstractions for Mail Agent., Low-level Chrome DevTools Protocol (CDP) Controller.  Handles trusted synthetic, Automation and protocol drivers for mail clients., Playwright Driver implementation for standalone browser execution., Standard SMTP Protocol Driver fallback. (+4 more)
+Cohesion: 0.07
+Nodes (17): main(), Autonomous Mail Agent Orchestrator.  High-level interface coordinating drivers,, CLI entrypoint for auto-mail agent., DataSanitizationError, Custom exceptions for the Mail Agent framework., Raised when sensitive data (e.g. credit card PAN or CVV) is detected in payload., AUTO-MATIC-MAIL-AGENT: Autonomous Email Dispatch & Management Agent for Outlook, ProviderType (+9 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.08
-Nodes (7): ABC, BaseMailDriver, Base driver interface for mail automation., Abstract base class for all browser and protocol drivers., BaseMailProvider, Abstract Base Provider for Web Mail Clients., Abstract base class for Outlook, Gmail, and other webmail providers.
+Cohesion: 0.09
+Nodes (9): ABC, BaseMailDriver, Base driver interface for mail automation., Abstract base class for all browser and protocol drivers., Low-level Chrome DevTools Protocol (CDP) Controller.  Handles trusted synthetic, Automation and protocol drivers for mail clients., Kimi WebBridge Driver implementation.  Communicates with the user's active brows, BaseMailProvider (+1 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.08
-Nodes (24): AgentConfig, GmailSelectors, OutlookSelectors, Configuration management for Auto-Matic-Mail-Agent., DOM selectors for Microsoft Outlook Web (live.com / office.com)., DOM selectors for Google Gmail Web., Global configuration settings for Mail Agent., Configuration for Kimi WebBridge daemon. (+16 more)
+Cohesion: 0.07
+Nodes (32): AgentConfig, GmailSelectors, OutlookSelectors, Configuration management for Auto-Matic-Mail-Agent., DOM selectors for Microsoft Outlook Web (live.com / office.com)., DOM selectors for Google Gmail Web., Global configuration settings for Mail Agent., Configuration for Kimi WebBridge daemon. (+24 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.09
-Nodes (18): DriverConnectionError, Raised when connecting to automation daemon (WebBridge/CDP) fails., BaseMailDriver, CDPController, Helper to construct and execute standard CDP payloads., Focuses element and inserts text., Sends native Enter key via CDP to tokenize pills/chips., Sends key combinations such as Ctrl+Enter. (+10 more)
+Cohesion: 0.08
+Nodes (21): DriverConnectionError, Raised when connecting to automation daemon (WebBridge/CDP) fails., CDPController, Helper to construct and execute standard CDP payloads., Focuses element and inserts text., Fills input, textarea, or contenteditable editor via native WebBridge fill tool., Sends native Enter key via CDP to tokenize pills/chips., Sends key combinations such as Ctrl+Enter. (+13 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.10
-Nodes (24): DataSanitizationError, Raised when sensitive data (e.g. credit card PAN or CVV) is detected in payload., ProviderType, RecipientRole, Enum, NamedTuple, Security and privacy sanitation subsystem., assert_payload_is_safe() (+16 more)
+Cohesion: 0.12
+Nodes (20): Validates, prepares, and dispatches an email message.          Args:, NamedTuple, Security and privacy sanitation subsystem., assert_payload_is_safe(), DataSanitizer, is_luhn_valid(), Privacy and PCI-DSS Data Sanitizer.  Enforces zero-credential leakage by scannin, Detects and redacts sensitive financial and authentication data. (+12 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.16
-Nodes (12): MailAgent, main(), CLI entrypoint for auto-mail agent., Master orchestrator for autonomous mail operations., Instantiates driver based on configuration., Returns provider engine instance for the driver., Validates, prepares, and dispatches an email message.          Args:, MailAgentError (+4 more)
+Cohesion: 0.07
+Nodes (27): 1. Interactive Mode, 1. System Architecture Diagram, 2. Core Engineering Highlights, 2. Direct CLI Command, 3. End-to-End Sequence Flow, 4. Graphify Knowledge Graph & Codebase Navigation, 5. Complete Python Source File Index & Specifications, 6. One-Shot Outlook Mail Dispatcher (`send_outlook.py`) (+19 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.13
-Nodes (5): DeliveryFailedError, Raised when email submission fails or returns an unrecoverable bounce/error., Direct SMTP email dispatch driver., Sends EmailMessage via SMTP., SMTPDriver
+Cohesion: 0.07
+Nodes (17): MailAgent, Master orchestrator for autonomous mail operations., Instantiates driver based on configuration., Returns provider engine instance for the driver., DeliveryFailedError, MailAgentError, Raised when email submission fails or returns an unrecoverable bounce/error., Base exception for all auto-mail agent errors. (+9 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.07
-Nodes (29): 1. CDP-Powered Native Recipient Tokenization, 1. Prerequisites, 2. Running Diagnostic Pill/Chip Validation, 2. Zero-Leakage Privacy & PCI-DSS Data Sanitizer, 3. Active Browser Session Borrowing via Kimi WebBridge, 3. Programmatic Python API, 4. Command-Line Interface (CLI), 4. Dual-Jurisdiction Statutory Grievance Generator (+21 more)
+Cohesion: 0.06
+Nodes (35): 1. CDP-Powered Native Recipient Tokenization, 1. Prerequisites, 2. ⚡ One-Shot Outlook Mail Dispatcher (`send_outlook.py`), 2. Running Diagnostic Pill/Chip Validation, 2. Zero-Leakage Privacy & PCI-DSS Data Sanitizer, 3. Active Browser Session Borrowing via Kimi WebBridge, 3. Programmatic Python API, 3. Running Diagnostic Pill/Chip Validation (+27 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.10
-Nodes (15): ElementInteractionError, Raised when clicking, typing, or dispatching events to a DOM node fails., BaseMailProvider, OutlookProvider, Populates To, Cc, and Bcc fields with verified tokenized pills., Injects subject line and triggers event bubbling., Automation engine for Microsoft Outlook Web., Injects rich HTML into Outlook's contentEditable editor. (+7 more)
+Cohesion: 0.14
+Nodes (10): BaseMailProvider, Cross-Verification Engine: Outlook <-> Gmail.  Dispatches an email:   1. From Mi, run_cross_verification(), OutlookProvider, Automation engine for Microsoft Outlook Web., Uploads one or more files to the Outlook email draft., Uploads one or more files to the Outlook email draft., Navigates to Outlook Web inbox. (+2 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.22
@@ -123,32 +129,52 @@ Cohesion: 0.15
 Nodes (9): Example: Sending a Formal Dual-Jurisdiction Legal Grievance via Outlook Web., run(), Templates for legal notices, consumer grievances, and developer claims., generate_dual_jurisdiction_grievance(), Dual-Jurisdiction Legal Grievance Generator (India & Singapore).  Generates form, Generates subject and rich HTML body for a formal dual-jurisdiction legal grieva, generate_student_pack_claim(), GitHub Student Developer Pack Verification & Claim Notice. (+1 more)
 
 ### Community 11 - "Community 11"
-Cohesion: 0.06
-Nodes (21): ComposeTimeoutError, Raised when an email recipient fails syntax or platform pill/chip validation., Raised when the mail client compose dialog or elements do not appear within time, RecipientValidationError, GmailProvider, Populates To, Cc, and Bcc in Gmail., Sets subject line in Gmail compose., Automation engine for Google Gmail Web. (+13 more)
+Cohesion: 0.15
+Nodes (9): GmailProvider, Populates To, Cc, and Bcc in Gmail., Automation engine for Google Gmail Web., Uploads files to Gmail draft., Uploads files to Gmail draft., Verifies 'Message sent' toast or compose dialog close., Navigates to Gmail inbox., Verifies 'Message sent' toast or compose dialog close. (+1 more)
+
+### Community 12 - "Community 12"
+Cohesion: 0.14
+Nodes (11): ComposeTimeoutError, ElementInteractionError, Raised when the mail client compose dialog or elements do not appear within time, Raised when clicking, typing, or dispatching events to a DOM node fails., Sets subject line in Gmail compose., Injects rich HTML into Gmail message body with TrustedHTML compatibility., Opens Gmail compose popup if not already present., Injects subject line using native fill (primary) then JS fallback. (+3 more)
 
 ### Community 13 - "Community 13"
 Cohesion: 0.29
 Nodes (10): get_driver(), main(), print_summary(), Diagnostic script to verify Outlook validPill and Gmail chip creation.  Validate, Tests Gmail recipient chip creation and validates native chip tokenization., Prints a structured summary table of all test runs., Instantiates the requested automation driver., Tests Outlook Web recipient pill creation and checks for red invalidPills. (+2 more)
 
+### Community 14 - "Community 14"
+Cohesion: 0.21
+Nodes (6): MockDriver, Tests for Outlook and Gmail provider orchestration with MockDriver., test_gmail_provider_recipient_setting(), test_gmail_readiness_verification(), test_outlook_provider_recipient_setting(), test_outlook_readiness_verification()
+
+### Community 16 - "Community 16"
+Cohesion: 0.29
+Nodes (4): Raised when an email recipient fails syntax or platform pill/chip validation., RecipientValidationError, Populates To, Cc, and Bcc fields with verified tokenized pills., Inserts an email and commits it with CDP Enter to form a native validPill.
+
+### Community 39 - "Community 39"
+Cohesion: 0.33
+Nodes (4): Inspects Gmail compose state prior to sending., Sends email in Gmail via Ctrl+Enter or Send button., Inspects Gmail compose state prior to sending., Sends email in Gmail via Ctrl+Enter or Send button.
+
+### Community 40 - "Community 40"
+Cohesion: 0.33
+Nodes (4): Inspects recipient pills, subject, and editor state., Sends email using Send button or CDP Ctrl+Enter shortcut., Inspects recipient pills, subject, and editor state., Sends email using Send button or CDP Ctrl+Enter shortcut.
+
 ## Knowledge Gaps
-- **18 isolated node(s):** `📌 Table of Contents`, `code:mermaid (flowchart TD)`, `1. CDP-Powered Native Recipient Tokenization`, `2. Zero-Leakage Privacy & PCI-DSS Data Sanitizer`, `3. Active Browser Session Borrowing via Kimi WebBridge` (+13 more)
+- **30 isolated node(s):** `📑 Document Structure`, `code:mermaid (flowchart TD)`, `I. Chrome DevTools Protocol (CDP) Virtual Keycode Tokenization`, `II. Resilient Subject & ContentEditable Injection (TrustedHTML & React Setters)`, `III. Zero-Leakage Privacy & PCI-DSS Data Sanitizer` (+25 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `MailAgent` connect `Community 5` to `Community 0`, `Community 2`, `Community 10`, `Community 4`?**
-  _High betweenness centrality (0.114) - this node is a cross-community bridge._
-- **Why does `GmailProvider` connect `Community 11` to `Community 0`, `Community 1`, `Community 2`, `Community 5`, `Community 8`, `Community 13`?**
-  _High betweenness centrality (0.094) - this node is a cross-community bridge._
-- **Why does `OutlookProvider` connect `Community 8` to `Community 0`, `Community 1`, `Community 2`, `Community 5`, `Community 11`, `Community 13`?**
-  _High betweenness centrality (0.094) - this node is a cross-community bridge._
-- **Are the 5 inferred relationships involving `GmailProvider` (e.g. with `BaseMailProvider` and `MockDriver`) actually correct?**
-  _`GmailProvider` has 5 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 5 inferred relationships involving `OutlookProvider` (e.g. with `BaseMailProvider` and `MockDriver`) actually correct?**
-  _`OutlookProvider` has 5 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 3 inferred relationships involving `WebBridgeDriver` (e.g. with `BaseMailDriver` and `CDPController`) actually correct?**
-  _`WebBridgeDriver` has 3 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `WebBridgeDriver` connect `Community 3` to `Community 1`, `Community 2`, `Community 6`, `Community 8`, `Community 13`?**
+  _High betweenness centrality (0.116) - this node is a cross-community bridge._
+- **Why does `OutlookProvider` connect `Community 8` to `Community 0`, `Community 1`, `Community 2`, `Community 6`, `Community 40`, `Community 12`, `Community 13`, `Community 14`, `Community 16`?**
+  _High betweenness centrality (0.103) - this node is a cross-community bridge._
+- **Why does `GmailProvider` connect `Community 11` to `Community 0`, `Community 1`, `Community 2`, `Community 6`, `Community 39`, `Community 8`, `Community 12`, `Community 13`, `Community 14`?**
+  _High betweenness centrality (0.086) - this node is a cross-community bridge._
+- **Are the 6 inferred relationships involving `WebBridgeDriver` (e.g. with `Colors` and `BaseMailDriver`) actually correct?**
+  _`WebBridgeDriver` has 6 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 8 inferred relationships involving `OutlookProvider` (e.g. with `Colors` and `BaseMailProvider`) actually correct?**
+  _`OutlookProvider` has 8 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 6 inferred relationships involving `GmailProvider` (e.g. with `BaseMailProvider` and `MockDriver`) actually correct?**
+  _`GmailProvider` has 6 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 2 inferred relationships involving `PlaywrightDriver` (e.g. with `BaseMailDriver` and `get_driver()`) actually correct?**
   _`PlaywrightDriver` has 2 INFERRED edges - model-reasoned connections that need verification._

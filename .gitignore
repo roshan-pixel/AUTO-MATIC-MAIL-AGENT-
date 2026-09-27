@@ -37,5 +37,6 @@ htmlcov/
 *.log
 scratch/
 temp/
+*.png
 .DS_Store
 Thumbs.db

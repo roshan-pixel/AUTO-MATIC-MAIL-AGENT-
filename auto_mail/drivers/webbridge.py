@@ -119,6 +119,11 @@ class WebBridgeDriver(BaseMailDriver):
         val = self.evaluate(code)
         return bool(val)
 
+    def fill(self, selector: str, value: str) -> bool:
+        """Fills input, textarea, or contenteditable editor via native WebBridge fill tool."""
+        res = self.execute_command("fill", {"selector": selector, "value": value})
+        return res.get("success", False)
+
     def dispatch_enter(self) -> bool:
         """Sends native Enter key via CDP to tokenize pills/chips."""
         down = self.cdp.enter_key_down()

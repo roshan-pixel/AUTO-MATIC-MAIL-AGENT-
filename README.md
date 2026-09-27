@@ -205,6 +205,7 @@ Every file in the repository serves a distinct architectural purpose:
 
 | File Path | Component | Responsibility |
 |---|---|---|
+| [`send_outlook.py`](send_outlook.py) | **One-Shot CLI** | **Interactive & one-command Outlook mail dispatcher with zero-touch delivery** |
 | [`auto_mail/__init__.py`](auto_mail/__init__.py) | Package Root | Exposes public API: `MailAgent`, `EmailMessage`, `Recipient`, `ProviderType` |
 | [`auto_mail/agent.py`](auto_mail/agent.py) | Orchestrator | Coordinates security scanning, driver initialization, and provider dispatch |
 | [`auto_mail/config.py`](auto_mail/config.py) | Configuration | Pydantic settings for WebBridge, timeouts, and Outlook/Gmail DOM selectors |
@@ -213,18 +214,20 @@ Every file in the repository serves a distinct architectural purpose:
 | [`auto_mail/drivers/__init__.py`](auto_mail/drivers/__init__.py) | Driver Root | Exports `BaseMailDriver`, `WebBridgeDriver`, `PlaywrightDriver`, `SMTPDriver` |
 | [`auto_mail/drivers/base.py`](auto_mail/drivers/base.py) | Interface | Abstract base class `BaseMailDriver` defining standard browser/protocol methods |
 | [`auto_mail/drivers/cdp_controller.py`](auto_mail/drivers/cdp_controller.py) | CDP Protocol | Low-level Chrome DevTools Protocol payloads (`Input.dispatchKeyEvent`, `DOM.setFileInputFiles`) |
-| [`auto_mail/drivers/webbridge.py`](auto_mail/drivers/webbridge.py) | WebBridge Client | Client for Kimi WebBridge daemon (`:10086`), active tab borrowing, and screenshotting |
+| [`auto_mail/drivers/webbridge.py`](auto_mail/drivers/webbridge.py) | WebBridge Client | Client for Kimi WebBridge daemon (`:10086`), native `fill()`, active tab borrowing, screenshotting |
 | [`auto_mail/drivers/playwright_driver.py`](auto_mail/drivers/playwright_driver.py) | Playwright Client | Standalone browser driver for automated CI/CD runs |
 | [`auto_mail/drivers/smtp_driver.py`](auto_mail/drivers/smtp_driver.py) | Protocol Client | Native Python `smtplib` driver with STARTTLS and MIME attachment support |
 | [`auto_mail/providers/__init__.py`](auto_mail/providers/__init__.py) | Provider Root | Exports `BaseMailProvider`, `OutlookProvider`, `GmailProvider` |
 | [`auto_mail/providers/base_provider.py`](auto_mail/providers/base_provider.py) | Base Engine | Abstract contract for webmail providers (open mailbox, compose, set fields, verify) |
-| [`auto_mail/providers/outlook.py`](auto_mail/providers/outlook.py) | Outlook Engine | Fluent UI pill validation, contentEditable insertion, readiness inspection |
-| [`auto_mail/providers/gmail.py`](auto_mail/providers/gmail.py) | Gmail Engine | Gmail chip tokenization, subject/body event bubbling, delivery toast verification |
+| [`auto_mail/providers/outlook.py`](auto_mail/providers/outlook.py) | Outlook Engine | Fluent UI pill validation, native fill + contentEditable, readiness inspection |
+| [`auto_mail/providers/gmail.py`](auto_mail/providers/gmail.py) | Gmail Engine | Gmail chip tokenization, TrustedHTML bypass, delivery toast verification |
 | [`auto_mail/security/__init__.py`](auto_mail/security/__init__.py) | Security Root | Exports `DataSanitizer`, `assert_payload_is_safe`, `is_luhn_valid` |
 | [`auto_mail/security/sanitizer.py`](auto_mail/security/sanitizer.py) | PCI-DSS Guard | Luhn PAN detector, CVV scrubber, private key leak blocker |
 | [`auto_mail/templates/__init__.py`](auto_mail/templates/__init__.py) | Templates Root | Exports statutory legal and developer claim templates |
 | [`auto_mail/templates/legal_grievance.py`](auto_mail/templates/legal_grievance.py) | Grievance Template | Formats dual-jurisdiction statutory legal notices (India & Singapore) |
 | [`auto_mail/templates/student_pack_claim.py`](auto_mail/templates/student_pack_claim.py) | Claim Template | Formats GitHub Student Developer Pack cloud verification claims |
+| [`examples/send_outlook_only.py`](examples/send_outlook_only.py) | Focused Runner | Dedicated Outlook-only dispatch script with preview screenshot |
+| [`examples/run_cross_verification.py`](examples/run_cross_verification.py) | Cross-Verification | Automated bi-directional test between Outlook and Gmail |
 | [`examples/test_cdp_pills.py`](examples/test_cdp_pills.py) | Diagnostic CLI | Diagnostic script testing Outlook pills and Gmail chips without sending |
 | [`examples/send_outlook_grievance.py`](examples/send_outlook_grievance.py) | Example | End-to-end statutory grievance dispatch example via Outlook Web |
 | [`examples/send_gmail_notice.py`](examples/send_gmail_notice.py) | Example | Developer cloud deployment notice dispatch example via Gmail Web |
@@ -253,7 +256,34 @@ If using the browser-based driver, ensure the **Kimi WebBridge** daemon is runni
 curl -s http://127.0.0.1:10086/status
 ```
 
-### 2. Running Diagnostic Pill/Chip Validation
+### 2. ⚡ One-Shot Outlook Mail Dispatcher (`send_outlook.py`)
+Dispatch emails via Microsoft Outlook Web in one go, either interactively or through a single command:
+
+#### Interactive Mode (Just load and tell what to mail!):
+```bash
+python send_outlook.py
+```
+> Prompts for Recipient `To`, optional `Cc`, `Subject`, `Body` (single-line, multiline, or `@file`), optional `Attachment`, shows a formatted confirmation preview box, and sends in one shot!
+
+#### Single Direct Command:
+```bash
+# Instant send with automatic confirmation skip (-y)
+python send_outlook.py -t sgarmy200@gmail.com -s "Quick Update" -b "Hello from the agent!" -y
+
+# With CC, multi-line/HTML body, and attachment:
+python send_outlook.py \
+  -t "sgarmy200@gmail.com" \
+  -c "team@example.com" \
+  -s "Sprint Report" \
+  --body-file ./report.html \
+  -a ./assets/summary.pdf \
+  -y
+
+# Dry-run inspection (populates compose, verifies badges, takes preview screenshot, doesn't send):
+python send_outlook.py -t "client@example.com" -s "Review" -b "Draft text" --dry-run
+```
+
+### 3. Running Diagnostic Pill/Chip Validation
 Verify recipient badges without sending any email:
 ```bash
 # Run both Outlook and Gmail pill/chip validation

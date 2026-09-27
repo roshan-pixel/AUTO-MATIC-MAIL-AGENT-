@@ -1,7 +1,7 @@
 {
   "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\agent.py": {
-    "mtime": 1790513344.8963757,
-    "ast_hash": "ac8d964ce2cbb7bffed2a59292aa2bf1",
+    "mtime": 1790515710.0273187,
+    "ast_hash": "02d45b45efda3c621e46b28d3812c85b",
     "semantic_hash": ""
   },
   "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\config.py": {
@@ -45,8 +45,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\drivers\\webbridge.py": {
-    "mtime": 1790514483.0762105,
-    "ast_hash": "4e931ece0aa6b5a89a8c3d55ce658c0a",
+    "mtime": 1790515178.7805977,
+    "ast_hash": "dee51e05a6820186c9ca029a524225f6",
     "semantic_hash": ""
   },
   "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\drivers\\__init__.py": {
@@ -60,13 +60,13 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\providers\\gmail.py": {
-    "mtime": 1790514508.0578222,
-    "ast_hash": "5375a9eda925dae18a40f7e1ca7e4039",
+    "mtime": 1790515195.5793195,
+    "ast_hash": "641b6e01db36001478e87616f31654e7",
     "semantic_hash": ""
   },
   "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\providers\\outlook.py": {
-    "mtime": 1790514498.556742,
-    "ast_hash": "8ea983c0802d8f0e3466dfbe332a87cc",
+    "mtime": 1790515377.3168645,
+    "ast_hash": "520050f5a35ea89969d106a93ed5fba7",
     "semantic_hash": ""
   },
   "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\auto_mail\\providers\\__init__.py": {
@@ -150,8 +150,28 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\README.md": {
-    "mtime": 1790514679.8260057,
-    "ast_hash": "6fd46117cb6c2c3fff6c7ce1d95767c4",
+    "mtime": 1790515781.3109758,
+    "ast_hash": "0e1c1e8050b7cd91fb9ac4f71a9d31b0",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\send_outlook.py": {
+    "mtime": 1790515658.5261395,
+    "ast_hash": "7f4b5c74f04cf191009e5342762e1759",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\examples\\run_cross_verification.py": {
+    "mtime": 1790515016.8832912,
+    "ast_hash": "727caffea0a84de936079af5dadda2b1",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\examples\\send_outlook_only.py": {
+    "mtime": 1790515483.9285383,
+    "ast_hash": "9923948aa9b96c7f483f6ff161559e88",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\sgarm\\AUTO-MATIC-MAIL-AGENT-\\ARCHITECTURE.md": {
+    "mtime": 1790515799.2242153,
+    "ast_hash": "0d266dc75fde2eefaec916ad8d44ce31",
     "semantic_hash": ""
   }
 }

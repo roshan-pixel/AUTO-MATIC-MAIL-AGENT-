@@ -149,32 +149,68 @@ class OutlookProvider(BaseMailProvider):
         return True
 
     def set_subject(self, subject: str) -> bool:
-        """Injects subject line and triggers event bubbling."""
+        """Injects subject line using native fill (primary) then JS fallback."""
         self.open_compose()
+        # Wait for compose to fully render before touching subject
+        time.sleep(0.5)
+
+        # Primary: WebBridge native fill — most reliable for <input> elements
+        if hasattr(self.driver, "fill"):
+            try:
+                result = self.driver.fill(self.selectors.subject_field, subject)
+                if result:
+                    time.sleep(0.2)  # Let UI update
+                    return True
+            except Exception:
+                pass
+
+        # Fallback: JS value assignment with bubbling events
         code = f"""(() => {{
             const input = document.querySelector({json.dumps(self.selectors.subject_field)});
             if (!input) return false;
             input.focus();
-            input.value = {json.dumps(subject)};
+            // Native value setter to bypass React/Angular controlled-input detection
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+            nativeInputValueSetter.call(input, {json.dumps(subject)});
             input.dispatchEvent(new Event('input', {{ bubbles: true }}));
             input.dispatchEvent(new Event('change', {{ bubbles: true }}));
-            return true;
+            input.dispatchEvent(new KeyboardEvent('keyup', {{ bubbles: true }}));
+            return input.value === {json.dumps(subject)};
         }})()"""
         res = self.driver.evaluate(code)
         if not res:
             raise ElementInteractionError("Failed to set subject line in Outlook compose.")
+        time.sleep(0.2)
         return True
 
     def set_body(self, html_content: str) -> bool:
         """Injects rich HTML into Outlook's contentEditable editor."""
         self.open_compose()
+        # Prefer native driver fill if available
+        if hasattr(self.driver, "fill"):
+            try:
+                import re
+                plain = re.sub(r'</?(?:p|div|h\d|tr)>', '\n', html_content)
+                plain = re.sub(r'<br\s*/?>', '\n', plain)
+                plain = re.sub(r'<[^>]+>', '', plain).strip()
+                if self.driver.fill(self.selectors.body_field, plain or html_content):
+                    return True
+            except Exception:
+                pass
+
         code = f"""(() => {{
             const editor = document.querySelector({json.dumps(self.selectors.body_field)});
             if (!editor) return false;
             editor.focus();
-            editor.innerHTML = {json.dumps(html_content)};
-            editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
-            return true;
+            try {{
+                editor.innerHTML = {json.dumps(html_content)};
+                editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                return true;
+            }} catch (e) {{
+                editor.innerText = {json.dumps(html_content)};
+                editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                return true;
+            }}
         }})()"""
         res = self.driver.evaluate(code)
         if not res:

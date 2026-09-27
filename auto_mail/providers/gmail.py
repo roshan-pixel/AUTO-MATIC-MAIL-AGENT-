@@ -162,15 +162,47 @@ class GmailProvider(BaseMailProvider):
         return True
 
     def set_body(self, html_content: str) -> bool:
-        """Injects rich HTML into Gmail message body."""
+        """Injects rich HTML into Gmail message body with TrustedHTML compatibility."""
         self.open_compose()
+        # Prefer native driver fill if available (handles contenteditable cleanly)
+        if hasattr(self.driver, "fill"):
+            try:
+                import re
+                plain = re.sub(r'</?(?:p|div|h\d|tr)>', '\n', html_content)
+                plain = re.sub(r'<br\s*/?>', '\n', plain)
+                plain = re.sub(r'<[^>]+>', '', plain).strip()
+                if self.driver.fill(self.selectors.body_field, plain or html_content):
+                    return True
+            except Exception:
+                pass
+
+        # Trusted Types / DOM injection fallback
         code = f"""(() => {{
             const editor = document.querySelector({json.dumps(self.selectors.body_field)});
             if (!editor) return false;
             editor.focus();
-            editor.innerHTML = {json.dumps(html_content)};
-            editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
-            return true;
+            try {{
+                if (window.trustedTypes) {{
+                    let policy = window.trustedTypes.defaultPolicy;
+                    if (!policy) {{
+                        try {{ policy = window.trustedTypes.createPolicy('gmail-body-policy', {{ createHTML: s => s }}); }} catch (e) {{}}
+                    }}
+                    if (policy) {{
+                        editor.innerHTML = policy.createHTML({json.dumps(html_content)});
+                        editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        return true;
+                    }}
+                }}
+            }} catch (e) {{}}
+            try {{
+                editor.innerHTML = {json.dumps(html_content)};
+                editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                return true;
+            }} catch (e) {{
+                editor.innerText = {json.dumps(html_content)};
+                editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                return true;
+            }}
         }})()"""
         res = self.driver.evaluate(code)
         if not res:

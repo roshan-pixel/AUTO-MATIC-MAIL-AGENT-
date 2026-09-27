@@ -128,10 +128,11 @@ def main():
     parser.add_argument("--provider", choices=["outlook", "gmail"], default="outlook", help="Target mail provider")
     parser.add_argument("--dry-run", action="store_true", help="Populate fields without clicking Send")
     parser.add_argument("--driver", choices=["webbridge", "playwright"], default="webbridge", help="Automation driver")
+    parser.add_argument("--session", default="mail-cross-verify", help="WebBridge session name (default: mail-cross-verify)")
 
     args = parser.parse_args()
 
-    agent = MailAgent(driver_type=args.driver)
+    agent = MailAgent(driver_type=args.driver, session_name=args.session)
     msg = EmailMessage(subject=args.subject, body_html=args.body)
     for t in args.to:
         msg.add_to(t)
