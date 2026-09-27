@@ -70,7 +70,7 @@ class WebBridgeDriver(BaseMailDriver):
 
     def navigate(self, url: str) -> bool:
         """Navigates to URL, attempting to find or borrow an existing tab first."""
-        # Try finding existing tab with this host
+        # 1. Try finding existing tab with this host in this session
         try:
             res_find = self.execute_command("find_tab", {"url": url})
             if res_find.get("success"):
@@ -78,7 +78,15 @@ class WebBridgeDriver(BaseMailDriver):
         except Exception:
             pass
 
-        # Otherwise navigate
+        # 2. Try borrowing the user's currently active tab if on this host
+        try:
+            res_borrow = self.execute_command("find_tab", {"url": url, "active": True})
+            if res_borrow.get("success"):
+                return True
+        except Exception:
+            pass
+
+        # 3. Otherwise navigate to target URL
         res = self.execute_command("navigate", {"url": url, "newTab": False})
         return res.get("success", False)
 

@@ -35,8 +35,22 @@ class GmailProvider(BaseMailProvider):
 
         # Click Compose button
         click_code = f"""(() => {{
-            const btn = document.querySelector({json.dumps(self.selectors.compose_button)}) ||
-                        Array.from(document.querySelectorAll('div[role=\"button\"]')).find(el => el.innerText && el.innerText.trim().toLowerCase() === 'compose');
+            const candidates = [
+                {json.dumps(self.selectors.compose_button)},
+                'div[role="button"][gh="cm"]',
+                'div[aria-label*="Compose"]',
+                '.T-I.T-I-KE.L3'
+            ];
+            for (const sel of candidates) {{
+                try {{
+                    const el = document.querySelector(sel);
+                    if (el) {{ el.click(); return true; }}
+                }} catch (e) {{}}
+            }}
+            const btn = Array.from(document.querySelectorAll('div[role=\"button\"], button')).find(el => {{
+                const txt = (el.innerText || '').trim().toLowerCase();
+                return txt === 'compose' || txt.includes('compose');
+            }});
             if (btn) {{
                 btn.click();
                 return true;

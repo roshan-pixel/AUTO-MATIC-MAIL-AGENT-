@@ -34,10 +34,26 @@ class OutlookProvider(BaseMailProvider):
         if self.driver.evaluate(is_open_code):
             return True
 
-        # Click "New mail" button
+        # Click "New mail" or "New message" button
         click_code = f"""(() => {{
-            const btn = document.querySelector({json.dumps(self.selectors.new_mail_button)}) ||
-                        Array.from(document.querySelectorAll('button, div')).find(e => e.innerText && e.innerText.trim().startsWith('New mail'));
+            const candidates = [
+                {json.dumps(self.selectors.new_mail_button)},
+                'button[aria-label*="New message"]',
+                'button[title*="New message"]',
+                'button[name="New message"]',
+                'button[data-automation-id="newMessageButton"]',
+                '[data-item-id="newMessage"]'
+            ];
+            for (const sel of candidates) {{
+                try {{
+                    const el = document.querySelector(sel);
+                    if (el) {{ el.click(); return true; }}
+                }} catch (e) {{}}
+            }}
+            const btn = Array.from(document.querySelectorAll('button, div[role="button"], span')).find(e => {{
+                const txt = (e.innerText || '').trim().toLowerCase();
+                return txt.startsWith('new mail') || txt.startsWith('new message') || txt === 'new';
+            }});
             if (btn) {{
                 btn.click();
                 return true;
@@ -46,7 +62,7 @@ class OutlookProvider(BaseMailProvider):
         }})()"""
         clicked = self.driver.evaluate(click_code)
         if not clicked:
-            raise ComposeTimeoutError("Could not find or click 'New mail' button in Outlook.")
+            raise ComposeTimeoutError("Could not find or click 'New mail' or 'New message' button in Outlook.")
 
         # Poll until compose fields appear
         start_time = time.time()
